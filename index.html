@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bluelime.nl - Te Koop</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><ellipse cx='50' cy='50' rx='40' ry='30' fill='%2320B8E6'/></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue: #20B8E6;
+            --blue-light: #5FCFEF;
+            --blue-glow: rgba(32, 184, 230, 0.15);
+            --dark: #4A4A4A;
+            --white: #FFFFFF;
+            --gray: #888888;
+            --light-gray: #F5F5F5;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--white);
+            color: var(--dark);
+        }
+
+        .page {
+            display: flex;
+            min-height: 100%;
+        }
+
+        /* Left side - Logo area */
+        .brand-side {
+            flex: 1;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-side::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -30%;
+            width: 80%;
+            height: 160%;
+            background: radial-gradient(circle, var(--blue-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .logo-container {
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .logo {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 20px 40px rgba(32, 184, 230, 0.2));
+        }
+
+        /* Right side - Form area */
+        .content-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3rem;
+            max-width: 500px;
+        }
+
+        .domain {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.1s backwards;
+        }
+
+        /* Price */
+        .price-section {
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .price-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .price-note {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        /* Contact form */
+        .form-section {
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        .form-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--light-gray);
+            border: 1px solid #E5E5E5;
+            border-radius: 0.5rem;
+            color: var(--dark);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #999;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px var(--blue-glow);
+        }
+
+        textarea {
+            resize: none;
+            min-height: 80px;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--blue);
+            border: none;
+            border-radius: 0.5rem;
+            color: var(--white);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background: var(--blue-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(32, 184, 230, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success {
+            background: #34C759 !important;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.75rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hidden honeypot */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Mobile: stack vertically */
+        @media (max-width: 900px) {
+            .page {
+                flex-direction: column;
+            }
+
+            .brand-side {
+                padding: 2rem;
+                min-height: auto;
+            }
+
+            .logo {
+                max-width: 200px;
+            }
+
+            .content-side {
+                max-width: 100%;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <!-- Left: Brand/Logo -->
+        <div class="brand-side">
+            <div class="logo-container">
+                <img src="logo.png" alt="Bluelime" class="logo">
+            </div>
+        </div>
+
+        <!-- Right: Content -->
+        <div class="content-side">
+            <h1 class="domain">bluelime.nl</h1>
+            <p class="tagline">Dit domein is te koop</p>
+            
+            <div class="price-section">
+                <p class="price-label">Vraagprijs</p>
+                <p class="price">€8.500</p>
+                <p class="price-note">Inclusief logo en branding</p>
+            </div>
+
+            <div class="form-section">
+                <span class="form-label">Interesse? Neem contact op</span>
+                
+                <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="f130b6d7-e562-41b4-84a4-52d91ecce280">
+                    <input type="hidden" name="subject" value="Bod op bluelime.nl">
+                    <input type="hidden" name="from_name" value="bluelime.nl Website">
+                    <input type="checkbox" name="botcheck" class="hidden">
+                    
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Uw naam" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Uw e-mailadres" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="offer" placeholder="Uw bod (optioneel)">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Uw bericht (optioneel)" rows="3"></textarea>
+                    </div>
+                    <button type="submit">Verstuur</button>
+                </form>
+            </div>
+
+            <p class="footer">© 2025 bluelime.nl</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('contact-form');
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Verzenden...';
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    submitButton.textContent = 'Bedankt!';
+                    submitButton.classList.add('success');
+                    form.reset();
+
+                    setTimeout(() => {
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalButtonText;
+                        submitButton.classList.remove('success');
+                    }, 3000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                submitButton.textContent = 'Probeer opnieuw';
+                submitButton.disabled = false;
+                alert('Er ging iets mis. Probeer het opnieuw.');
+            }
+        });
+    </script>
+</body>
+</html>
